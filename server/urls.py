@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from vue.views import getVue
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', getVue),
+    # This URL needs to be the last, it hijacks every other route afterwards:
+    re_path(r'^.*$', getVue),
 ]

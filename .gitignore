@@ -138,7 +138,7 @@ GitHub.sublime-settings
 
 ### CUSTOM ###
 vue/static/vue/generated/*
-
+vue/templates/index.html
 
 
 

@@ -9,6 +9,8 @@ function discardEmptyValues(o: Object): Object {
 interface User {
   auth: boolean,
   username: string,
+  email: string,
+  url: string
 }
 
 export const useStateStore = defineStore("state", () => {

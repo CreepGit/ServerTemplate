@@ -33,7 +33,6 @@ Steps it does:
  - Go to client
  - Build distribution files for vue (makes django see vue changes)
  - Go back to project root
- - copy built index.html file from static files into template folder where django can find it
  - run server on port 9000
 
-`cd vue/client/ && npm run build && cd ../.. && cp vue/static/vue/generated/index.html vue/templates/vue/index.html && python manage.py runserver 9000`
+`cd vue/client/ && npm run build && cd ../.. && python manage.py runserver 9000`

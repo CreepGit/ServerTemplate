@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from vue.views import getVue
-from rest_framework import routers
+from server.rest import rest_urlpatterns
 
-
-router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('rest/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
+    path("admin/", admin.site.urls),
+    path("rest/", include(rest_urlpatterns)),
+    path("api-auth/", include("rest_framework.urls")),
     # This URL needs to be the last, it hijacks every other route afterwards:
-    re_path(r'^.*$', getVue),
+    re_path(r"^.*$", getVue),
 ]

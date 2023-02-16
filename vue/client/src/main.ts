@@ -1,4 +1,4 @@
-import { createApp, devtools } from 'vue'
+import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -12,8 +12,3 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
-
-if (!(devtools == undefined || devtools.enabled == false)) {
-    document.title = "Dev " + document.title
-}
-

@@ -14,12 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from vue.views import getVue
+from rest_framework import routers
 
+
+router = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('rest/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
     # This URL needs to be the last, it hijacks every other route afterwards:
     re_path(r'^.*$', getVue),
 ]

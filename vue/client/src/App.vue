@@ -1,6 +1,30 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { ref, watch, onMounted, onBeforeMount, type Ref } from 'vue';
+import { useStateStore } from '@/stores/state'
 import HelloWorld from './components/HelloWorld.vue'
+import Switch from './components/ToggleSwitch.vue'
+
+const store = useStateStore()
+const themeSwitcherValue: Ref<boolean> = ref(store.currentTheme == "dark")
+watch(themeSwitcherValue, (newValue, oldValue)=>{
+  store.setTheme(newValue ? "dark" : "light")
+})
+
+onBeforeMount(()=>{
+  const preferTheme = localStorage.getItem("preferredColorScheme")
+  if (preferTheme) {
+    document.documentElement.className = preferTheme;
+  }
+})
+onMounted(()=>{
+  // This removes the background overwrite that happens in index.html
+  // Keep these two files in sync!
+  setTimeout(()=>{
+    document.body.style.backgroundColor = ""
+    document.body.style.transition = ""
+  }, 0)
+})
 </script>
 
 <template>
@@ -16,9 +40,13 @@ import HelloWorld from './components/HelloWorld.vue'
         <a href="/rest/">Rest</a>
         <a href="/admin/">Admin</a>
       </nav>
+      <div style="display: flex; justify-content: space-between; width: 100%;">
+        <h3>Theme Selector: </h3>
+        <h3>🌞 <Switch class="themeSwitch" v-model="themeSwitcherValue" /> 🌙</h3>
+      </div>
+      <span>Notice how it does not flash the screen on refresh on either of the two themes.</span>
     </div>
   </header>
-
   <RouterView />
 </template>
 
@@ -26,6 +54,10 @@ import HelloWorld from './components/HelloWorld.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+:deep(.themeSwitch.active .ball) {
+  background-color: goldenrod;
 }
 
 .logo {

@@ -34,5 +34,12 @@ export const useStateStore = defineStore("state", () => {
     });
   }
 
-  return { user, loggedIn, runningOnDev };
+  function setTheme(name: string) {
+    document.documentElement.className = name;
+    currentTheme.value = name
+    localStorage.setItem("preferredColorScheme", name)
+  }
+  const currentTheme = ref(localStorage.getItem("preferredColorScheme") || "light")
+
+  return { user, loggedIn, runningOnDev, setTheme, currentTheme };
 });

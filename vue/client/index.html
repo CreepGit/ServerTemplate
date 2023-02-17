@@ -10,4 +10,13 @@
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
+  <script>
+    // This prevents the screen from flashing assuming the background colour is spot on
+    // Both forced effects are removed in the main App.vue, Keep these two files in sync!
+    const preferTheme = localStorage.getItem("preferredColorScheme")
+    if (preferTheme == "dark") {
+      document.body.style.backgroundColor = "#181818"
+    }
+    document.body.style.transition = "all 0ms"
+  </script>
 </html>

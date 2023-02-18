@@ -22,15 +22,14 @@ setTimeout(()=>{
 <style scoped>
 dialog.cookie {
   position: fixed;
-  bottom: 50px;
-  left: 50%;
-  translate: -50%;
+  left: 0;
+  bottom: 0;
   color: inherit;
-  border-radius: 0 20px 20px 0;
   border: none;
   padding: 3px;
-  padding-left: 0;
-  background: linear-gradient(110deg, transparent, rgb(0, 189, 126));
+  padding-bottom: 0;
+  background: linear-gradient(0deg, transparent, rgb(0, 189, 126));
+  border-radius: 20px 20px 0 0;
 }
 
 dialog.cookie:hover {
@@ -50,15 +49,16 @@ dialog.cookie:hover .highlightOnHover {
 }
 
 dialog.cookie div {
-  background: linear-gradient(90deg, var(--color-background), var(--color-background-soft));
-  padding: 20px 40px 20px 40px;
-  border-radius: 0 20px 20px 0;
+  background: linear-gradient(0deg, var(--color-background), var(--color-background-soft));
+  padding: 15px;
+  border-radius: 20px 20px 0 0;
 }
 
 dialog.cookie img {
   position: absolute;
-  bottom: -50px;
-  right: calc(100% - 20px);
+  bottom: calc(100% - 30px);
+  right: 50%;
+  translate: 50%;
   height: 200px;
   animation: spin 4s infinite;
   pointer-events: none;
@@ -87,10 +87,45 @@ dialog.cookie img {
 
 .cookie-transition-enter-from,
 .cookie-transition-leave-to {
-  transform: translateX(200px);
-  opacity: 0%;
+    transform: translateY(200px);
+    opacity: 0%;
 }
 .cookie-transition-leave-to {
-  transform: translateY(70px);
+    transform: translateY(70px);
+}
+
+
+@media (min-width: 700px) {
+    dialog.cookie {
+        left: 50%;
+        min-width: 65%;
+        translate: -50%;
+        bottom: 50px;
+        border-radius: 0 20px 20px 0;
+        background: linear-gradient(110deg, transparent, rgb(0, 189, 126));
+        padding-left: 0;
+        padding-bottom: 3px;
+    }
+
+    .cookie-transition-enter-from,
+    .cookie-transition-leave-to {
+        transform: translateX(200px);
+        opacity: 0%;
+    }
+    .cookie-transition-leave-to {
+        transform: translateY(70px);
+    }
+
+    dialog.cookie div {
+        background: linear-gradient(90deg, var(--color-background), var(--color-background-soft));
+        padding: 20px 40px 20px 40px;
+        border-radius: 0 20px 20px 0;
+    }
+
+    dialog.cookie img {
+        bottom: -50px;
+        right: calc(100% - 20px);
+        translate: 0;
+    }
 }
 </style>

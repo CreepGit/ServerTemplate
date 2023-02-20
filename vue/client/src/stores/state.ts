@@ -1,6 +1,7 @@
 import { ref, computed, devtools } from "vue";
 import { defineStore } from "pinia";
 import type { Ref, ComputedRef } from 'vue';
+import { ApiCall } from "@/api";
 
 function discardEmptyValues(o: Object): Object {
   return Object.fromEntries(Object.entries(o).filter((k, v) => v));
@@ -12,6 +13,10 @@ interface User {
   email: string,
   url: string
 }
+
+ApiCall('rest/who/', (d: User)=>{
+  console.log("But here it works", d.auth)
+})
 
 export const useStateStore = defineStore("state", () => {
   const user: Ref<User|undefined> = ref(undefined);

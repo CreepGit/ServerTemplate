@@ -4,7 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth import get_user_model
-from django.urls import path, include
+from django.urls import path, include, re_path
+from vue.views import getVueWithCode
 from rest_framework.reverse import reverse
 
 
@@ -51,4 +52,6 @@ rest_urlpatterns = [
     path("", include(router.urls), name="api-root"),
     path("users/", UserViewSet.as_view({"get": "list"}), name="api-users"),
     path("who/", CurrentUserView.as_view(), name="api-who"),
+    # Redirect to vue page if you encounter problems
+    re_path(r"^.*$", getVueWithCode(404)),
 ]

@@ -39,7 +39,12 @@ export const useStateStore = defineStore("state", () => {
     currentTheme.value = name
     localStorage.setItem("preferredColorScheme", name)
   }
-  const currentTheme = ref(localStorage.getItem("preferredColorScheme") || "light")
+  const browserPrefersDarkTheme = ref(false)
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    browserPrefersDarkTheme.value = true
+  }
+  const currentTheme = ref(localStorage.getItem("preferredColorScheme") || (browserPrefersDarkTheme.value ? "dark" : "light"))
+  setTheme(currentTheme.value)
 
-  return { user, loggedIn, runningOnDev, setTheme, currentTheme };
+  return { user, loggedIn, runningOnDev, setTheme, currentTheme, browserPrefersDarkTheme };
 });

@@ -13,8 +13,12 @@
   <script>
     // This prevents the screen from flashing assuming the background colour is spot on
     // Both forced effects are removed in the main App.vue, Keep these two files in sync!
-    const preferTheme = localStorage.getItem("preferredColorScheme")
-    if (preferTheme == "dark") {
+    let theme = localStorage.getItem("preferredColorScheme")
+    if (theme == null) {
+      // Use browser theme if no theme is saved
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light"
+    }
+    if (theme == "dark") {
       document.body.style.backgroundColor = "#181818"
     }
     document.body.style.transition = "all 0ms"

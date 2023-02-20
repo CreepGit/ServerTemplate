@@ -12,7 +12,7 @@ setTimeout(()=>{
       <div>
         <h2>This webpage uses cookies! 🍪</h2>
         <p>But don't worry, we won't sell your personal data to a big corporation, or anyone else for that matter.
-        <span class="highlightOnHover">Click to discard</span> this message or <span @click.stop class="learnMore">click here to learn more.</span></p>
+        <span class="highlightOnHover">Click to discard</span> this message or <span @click.stop class="learnMore">click here to learn more</span> about how we use your data.</p>
       </div>
       <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpurepng.com%2Fpublic%2Fuploads%2Flarge%2Fpurepng.com-cookiefood-bakery-sweet-cookie-biscuit-941524621515qlctx.png&f=1&nofb=1&ipt=4775ddaed5e03227d733a58df57d073c8e73a01f5af512c90c2356e31f8fd2b7&ipo=images" alt="">
     </dialog>
@@ -97,8 +97,9 @@ dialog.cookie img {
 
 @media (min-width: 700px) {
     dialog.cookie {
-        left: 50%;
-        min-width: 65%;
+        left: calc(50% + 100px);
+        width: calc(100% - 350px);
+        max-width: 800px;
         translate: -50%;
         bottom: 50px;
         border-radius: 0 20px 20px 0;

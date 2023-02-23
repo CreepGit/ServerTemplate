@@ -23,6 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("rest/", include(rest_urlpatterns)),
     path("api-auth/", include("rest_framework.urls")),
+    path("accounts/", include("allauth.urls")),
     # This URL needs to be the last, it hijacks every other route afterwards:
     re_path(r"^.*$", getVue),
 ]

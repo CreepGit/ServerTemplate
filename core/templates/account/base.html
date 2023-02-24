@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      <strong>Messages:</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div>
+      <ul class="menu">
+        <li><a href="/">Main Page</a></li>
+        {% if not user.is_authenticated %}
+            <li><a href="{% url 'account_login' %}">Sign In</a></li>
+            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% else %}
+            <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+            <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+            <li><a href="{% url 'socialaccount_connections' %}">Connections</a></li>
+        {% endif %}
+    </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>
+
+<style>
+    body {
+        margin: 40px auto 0 auto;
+        max-width: fit-content;
+        box-shadow: 6px 6px 10px 10px #0002;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: #fff;
+        border-bottom: 3px solid black;
+        border-right: 3px solid black;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 0;
+    }
+    .menu > * {
+        list-style-type: none;
+    }
+    .menu a {
+        text-decoration: none;
+        border: 1px solid #888;
+        padding: 3px;
+    }
+
+    html {
+        background: linear-gradient(133deg, #3f7bac, #21a549);
+        background-size: 400% 400%;
+        animation: BackgroundGradient 40s ease-in-out infinite;
+    }
+    @keyframes BackgroundGradient {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+</style>

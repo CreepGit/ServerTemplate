@@ -10,14 +10,15 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      <template v-if="state.loggedIn">Logged in as '{{ state.user?.username }}'<br></template>
+      <template v-if="state.loggedIn">Logged in as '{{ state.user?.username }}#{{ state.user?.specifier||'Missing' }}'<br></template>
       <template v-else-if="state.user === undefined">Not Logged in, no server conection.<br></template>
       <template v-else>Not Logged in<br></template>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a> +
       <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a> +
-      <a href="https://www.django-rest-framework.org/" target="_blank" rel="noopener">Django Rest Framework</a>
+      <a href="https://www.django-rest-framework.org/" target="_blank" rel="noopener">Django Rest Framework</a> + 
+      <a href="https://django-allauth.readthedocs.io/en/latest/" target="_blank" rel="noopener">Allauth</a>
     </h3>
   </div>
 </template>

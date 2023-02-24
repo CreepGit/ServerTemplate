@@ -1,6 +1,7 @@
 import { ref, computed, devtools } from "vue";
 import { defineStore } from "pinia";
 import type { Ref, ComputedRef } from 'vue';
+import Cookies from 'js-cookie'
 
 function discardEmptyValues(o: Object): Object {
   return Object.fromEntries(Object.entries(o).filter((k, v) => v));
@@ -10,7 +11,9 @@ interface User {
   auth: boolean,
   username: string,
   email: string,
-  url: string
+  url: string,
+  specifier: string,
+  is_staff: boolean,
 }
 
 export const useStateStore = defineStore("state", () => {
@@ -46,5 +49,13 @@ export const useStateStore = defineStore("state", () => {
   const currentTheme = ref(localStorage.getItem("preferredColorScheme") || (browserPrefersDarkTheme.value ? "dark" : "light"))
   setTheme(currentTheme.value)
 
-  return { user, loggedIn, runningOnDev, setTheme, currentTheme, browserPrefersDarkTheme };
+  function logOutUser() {
+    let csrftoken = Cookies.get('csrftoken') as string;
+    fetch("/accounts/logout/", {
+        method: 'POST',
+        headers: { "X-CSRFToken": csrftoken },
+    }).then(data=>console.log("Logout:", data.status))
+  }
+
+  return { user, loggedIn, runningOnDev, setTheme, currentTheme, browserPrefersDarkTheme, logOutUser };
 });

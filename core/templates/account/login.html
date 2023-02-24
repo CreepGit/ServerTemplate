@@ -1,0 +1,59 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Sign In" %}</h1>
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+</form>
+
+<div style="height:40px;"></div>
+
+<form method="post" action="/accounts/google/login/?process=login">
+    {% csrf_token %}
+    <button type="submit" onclick="console.log('test')" class="googleLogin">
+        <img src="{% static 'core/g-logo.png' %}" alt="">
+        <span>Sign in with Google</span>
+    </button>
+</form>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+<style>
+    .googleLogin {
+        padding: 0;
+        font: "Roboto";
+        border: 1px solid #4285f4;
+        background-color: #4285f4;
+        margin: 3px auto;
+        display: flex;
+        height: 50px;
+        cursor: pointer;
+    }
+    .googleLogin img {
+        height: 20px;
+        width: 20px;
+        padding: 14px;
+        background: #fff;
+    }
+    .googleLogin span {
+        align-self: center;
+        padding: 16px;
+        color: #fff;
+        font-size: 16px;
+        font-family: Roboto,arial,sans-serif;
+    }
+</style>
+{% endblock %}

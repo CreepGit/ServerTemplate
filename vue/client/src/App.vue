@@ -5,10 +5,10 @@ import { useStateStore } from '@/stores/state'
 import HelloWorld from './components/HelloWorld.vue'
 import Switch from './components/ToggleSwitch.vue'
 
-const store = useStateStore()
-const themeSwitcherValue: Ref<boolean> = ref(store.currentTheme == "dark")
+const state = useStateStore()
+const themeSwitcherValue: Ref<boolean> = ref(state.currentTheme == "dark")
 watch(themeSwitcherValue, (newValue, oldValue)=>{
-  store.setTheme(newValue ? "dark" : "light")
+  state.setTheme(newValue ? "dark" : "light")
 })
 
 onBeforeMount(()=>{
@@ -39,6 +39,11 @@ onMounted(()=>{
         <RouterLink to="/about">About</RouterLink>
         <a href="/rest/">Rest</a>
         <a href="/admin/">Admin</a>
+        <a v-if="!state.user?.auth" href="/accounts/login/">Login</a>
+        <template v-else>
+          <a href="/accounts/logout/">Profile</a>
+          <a @click.stop.prevent="state.logOutUser" href="/accounts/logout/">Logout</a>
+        </template>
       </nav>
       <div style="display: flex; justify-content: space-between; width: 100%;">
         <h3>Theme Selector: </h3>

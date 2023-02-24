@@ -1,11 +1,10 @@
 from django.apps import AppConfig
 from allauth.account.signals import user_signed_up
-from core.models import User
 import random
 import string
 
 
-def add_missing_user_data(request, user: User, **kwargs):
+def add_missing_user_data(request, user, **kwargs):
     characters = string.ascii_uppercase + string.digits
     if not user.specifier:
         user.specifier = "".join(random.choices(characters, k=4))

@@ -10,7 +10,13 @@ Create a virtual python environment for the project (Do this outside of the proj
 
 `source virtualEnvLocation/DjangoServer/bin/activate`
 
+Install python packages (Do this in project root (where requirements.txt is))
+
+`python -m pip install -r requirements.txt`
+
 Run Django migrations (run while virtual environment is active)
+
+⚠️ If you want to customize core.User, do it before running any migrations or you will have to yeet and delete your database later on!
 
 `python manage.py migrate`
 
@@ -26,9 +32,15 @@ Run Django server on port 9000 (run while virtual environment is active)
 
 `python manage.py runserver 9000`
 
+Note! Google authentication only works on 127.0.0.1 and not on localhost
 
 ### Development 🔥
-Command for building files and immediately running Django server afterwards
+
+Make vite track any Vue changes and build them automatically into the django project, makes you not have to run vite development server. (requires manual page refresh for changes to apply)
+
+`npx vite build --watch --emptyOutDir`
+
+Old method: Command for building files and immediately running Django server afterwards
 
 `cd vue/client/ && npm run build && cd ../.. && python manage.py runserver 9000`
 

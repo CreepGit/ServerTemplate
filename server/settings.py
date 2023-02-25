@@ -135,6 +135,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Allauth
+ACCOUNT_ADAPTER = "core.adapters.CoreAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "core.adapters.CoreSocialAccountAdapter"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 ACCOUNT_EMAIL_REQUIRED = True

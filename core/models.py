@@ -63,8 +63,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
         self.username = self.username.lower()
-        if len(self.slug) < 4:
-            self.slug = str(random.randint(10**6, 10**8))
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""

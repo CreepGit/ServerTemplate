@@ -9,7 +9,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "email",
         "username",
-        "specifier",
+        "slug",
         "is_staff",
         "is_active",
     )
@@ -18,7 +18,7 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password", "username", "specifier")}),
+        (None, {"fields": ("email", "password", "username", "slug")}),
         (
             "Permissions",
             {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
@@ -32,7 +32,7 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "email",
                     "username",
-                    "specifier",
+                    "slug",
                     "password1",
                     "password2",
                     "is_staff",

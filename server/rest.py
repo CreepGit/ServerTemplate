@@ -14,7 +14,7 @@ User = get_user_model()
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ["url", "username", "is_staff", "specifier", "email"]
+        fields = ["url", "username", "is_staff", "slug", "email"]
 
 
 # ViewSets define the view behavior.

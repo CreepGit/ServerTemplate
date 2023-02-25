@@ -10,7 +10,7 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      <template v-if="state.loggedIn">Logged in as '{{ state.user?.username }}#{{ state.user?.specifier||'Missing' }}'<br></template>
+      <template v-if="state.loggedIn">Logged in as '{{ state.user?.username }}'<br></template>
       <template v-else-if="state.user === undefined">Not Logged in, no server conection.<br></template>
       <template v-else>Not Logged in<br></template>
       You’ve successfully created a project with

@@ -4,41 +4,23 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-import string
+import random
 
 
-def specifier_validator(value: str):
-    alloweds = set(string.ascii_uppercase + string.digits)
-    if len(value) != 4:
-        raise ValidationError(
-            f"Specifier must be exactly 4 characters (not {len(value)})",
-            params={"value": value},
-        )
-    for c in set(value):
-        if c not in alloweds:
-            raise ValidationError(
-                "Specifier can only contain uppercase letters and digits",
-                params={"value": value},
-            )
+def user_slug_validator(value: str):
+    if len(value) < 4:
+        raise ValidationError("Mininum length for slug is 4 characters")
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         "username",
-        max_length=30,
+        max_length=64,
         unique=False,
-        help_text="Required. 30 unicode characters or fewer.",
+        help_text="Only used as a display name, changeable. Required. 60 unicode characters or fewer.",
         error_messages={
             "unique": "A user with that username already exists.",
         },
-    )
-    specifier = models.CharField(
-        "specifier",
-        max_length=4,
-        unique=False,
-        blank=False,
-        help_text="Required. 4 characters. Uppercase letters and digits only.",
-        validators=[specifier_validator],
     )
     email = models.EmailField(
         "email address",
@@ -46,6 +28,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "unique": "A user with that email address already exists.",
         },
+    )
+    slug = models.SlugField(
+        "url slug",
+        max_length=32,
+        unique=True,
+        blank=False,
+        help_text="User's own short unique label for urls, changeable.",
+        validators=[user_slug_validator],
     )
     is_staff = models.BooleanField(
         "staff status",
@@ -63,24 +53,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["specifier", "username"]
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
-        constraints = [models.UniqueConstraint(
-            fields=["username", "specifier"], name="Unique username + specifier"
-        )]
 
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
         self.username = self.username.lower()
-        self.specifier = self.specifier.upper()
+        if len(self.slug) < 4:
+            self.slug = str(random.randint(10**6, 10**8))
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-    def get_name_with_specifier(self):
-        return f"{self.username}#{self.specifier}"

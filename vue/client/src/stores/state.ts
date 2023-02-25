@@ -12,7 +12,7 @@ interface User {
   username: string,
   email: string,
   url: string,
-  specifier: string,
+  slug: string,
   is_staff: boolean,
 }
 
@@ -55,6 +55,15 @@ export const useStateStore = defineStore("state", () => {
         method: 'POST',
         headers: { "X-CSRFToken": csrftoken },
     }).then(data=>console.log("Logout:", data.status))
+
+    setTimeout(()=>{
+      fetch("rest/who/")
+      .then((data: any) => data.json())
+      .then((data: any) => {
+        user.value = data;
+        console.log(data);
+      });
+    }, 100)
   }
 
   return { user, loggedIn, runningOnDev, setTheme, currentTheme, browserPrefersDarkTheme, logOutUser };

@@ -71,7 +71,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
-        self.username = self.username.lower()
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""

@@ -12,6 +12,10 @@ def user_slug_validator(value: str):
         raise ValidationError("Mininum length for slug is 4 characters")
 
 
+def generate_slug():
+    return str(random.randint(10**6, 10**8))
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         "username",
@@ -58,6 +62,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+
+    def save(self, *args, **kwargs):
+        if len(self.slug) < 4:
+            self.slug = generate_slug()
+        super(User, self).save(*args, **kwargs)
 
     def clean(self):
         super().clean()

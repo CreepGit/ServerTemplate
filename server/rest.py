@@ -4,8 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth import get_user_model
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.reverse import reverse
+from django.http import JsonResponse
 
 
 User = get_user_model()
@@ -41,6 +42,13 @@ class RootView(APIView):
         )
 
 
+def rest404view(request: WSGIRequest):
+    return JsonResponse({
+        "error": "No such page",
+    }, status = 404)
+
+
+
 router = routers.SimpleRouter(trailing_slash=True)
 router.register("users", UserViewSet)
 
@@ -49,4 +57,5 @@ rest_urlpatterns = [
     path("", include(router.urls), name="api-root"),
     path("users/", UserViewSet.as_view({"get": "list"}), name="api-users"),
     path("who/", CurrentUserView.as_view(), name="api-who"),
+    re_path(r"^.*$", rest404view),
 ]

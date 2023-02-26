@@ -7,7 +7,7 @@ function discardEmptyValues(o: Object): Object {
   return Object.fromEntries(Object.entries(o).filter((k, v) => v));
 }
 
-interface User {
+export interface User {
   auth: boolean,
   username: string,
   email: string,
@@ -17,19 +17,24 @@ interface User {
 }
 
 export const useStateStore = defineStore("state", () => {
-  function fetch2(url: string, method: string = ""): Promise<any> {
+  function fetch2(url: string, method: string = "GET", body = {}): Promise<any> {
     const csrftoken = Cookies.get('csrftoken') as string;
     return new Promise(async(resolve, reject)=>{
       fetch(url, {
-        headers: { "X-CSRFToken": csrftoken },
-        method: method||"GET",
+        headers: {
+          "X-CSRFToken": csrftoken,
+          "Content-Type": "application/json"
+        },
+        method: method,
+        body: method == "GET" ? null : JSON.stringify(body),
+        credentials: "same-origin",
       }).then(async response => {
         if (response.status == 200) {
           try {
             resolve(await response.json())
           } catch (error) {
             if (method == "POST") {
-              resolve()
+              resolve(null)
             }
             reject("Can't turn response into JSON")
           }

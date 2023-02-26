@@ -51,6 +51,7 @@ function submitName(e: any) {
 }
 .inputGroup * {
   border: 1px solid var(--color-text);
+  border-width: 1px 0px 1px 0px;
   background: var(--color-background-mute);
   color: var(--color-heading);
   padding: 0.2em 0.5em;

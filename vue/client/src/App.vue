@@ -42,11 +42,11 @@ onMounted(()=>{
         <a v-if="!state.user?.auth" href="/accounts/login/">Login</a>
         <template v-else>
           <a href="/accounts/logout/">Profile</a>
-          <a @click.stop.prevent="state.logOutUser" href="/accounts/logout/">Logout</a>
+          <a @click.stop.prevent="state.logOutUser" href="/#">Logout</a>
         </template>
       </nav>
       <div style="display: flex; justify-content: space-between; width: 100%;">
-        <h3>Theme Selector: </h3>
+        <h3 class="heading">Theme Selector: </h3>
         <h3>🌞 <Switch class="themeSwitch" v-model="themeSwitcherValue" /> 🌙</h3>
       </div>
       <span>Notice how it does not flash the screen on refresh on either of the two themes.</span>
@@ -59,6 +59,10 @@ onMounted(()=>{
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+.heading {
+  color: var(--color-heading);
 }
 
 :deep(.themeSwitch.active .ball) {
@@ -75,6 +79,10 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 1px;
 }
 
 nav a.router-link-exact-active {
@@ -88,11 +96,6 @@ nav a.router-link-exact-active:hover {
 nav a {
   display: inline-block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 
 @media (min-width: 1024px) {
@@ -119,6 +122,11 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+
+  nav a {
+    width: unset;
+    flex-basis: 85px;
   }
 }
 </style>

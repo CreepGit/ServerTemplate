@@ -144,6 +144,9 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_FORMS = {
+    'signup': 'core.forms.CoreSignupForm',
+}
 
 # Provider specific settings https://django-allauth.readthedocs.io/en/latest/installation.html
 SOCIALACCOUNT_PROVIDERS = {

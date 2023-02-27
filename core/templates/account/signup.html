@@ -8,18 +8,27 @@
 
 {% block content %}
 
-<h1 class="cardTitle">Sign In</h1>
-<a href="/accounts/signup/" class="greyLink" style="margin-bottom: 1.5em;">Sign up instead?</a>
+<h1 class="cardTitle">Sign Up</h1>
+<a href="/accounts/login/" class="greyLink" style="margin-bottom: 1.5em;">Login instead?</a>
 
-<form class="sign" method="POST" action="{% url 'account_login' %}">
+<form class="sign" method="POST" action="{% url 'account_signup' %}">
   {% csrf_token %}
   <div class="fieldWrapper">
-    {{ form.login.errors }}
-    {{ form.login }}
+    {{ form.username_field.errors }}
+    {{ form.username_field }}
+    <p style="color: grey; padding: 0; margin: 0;">Username can be changed later</p>
   </div>
   <div class="fieldWrapper">
-    {{ form.password.errors }}
-    {{ form.password }}
+    {{ form.email.errors }}
+    {{ form.email }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.password1.errors }}
+    {{ form.password1 }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.password2.errors }}
+    {{ form.password2 }}
   </div>
   {% for error in form.non_field_errors %}
     <p>{{ error }}</p>
@@ -28,8 +37,8 @@
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <div class="formBottom">
-    <a class="greyLink" href="{% url 'account_reset_password' %}">Forgot Password?</a>
-    <button type="submit">Sign In</button>
+    <span></span>
+    <button type="submit">Create an account</button>
   </div>
 </form>
 

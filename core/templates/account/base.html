@@ -5,6 +5,9 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
@@ -12,14 +15,10 @@
   <body>
     <div style="position: fixed; top: 0;">
       <ul class="menu">
-        <li><a href="/">Main Page</a></li>
-        {% if not user.is_authenticated %}
-            <li><a href="{% url 'account_login' %}">Sign In</a></li>
-            <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% else %}
+        {% if user.is_authenticated %}
             <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-            <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
             <li><a href="{% url 'socialaccount_connections' %}">Connections</a></li>
+            <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
         {% endif %}
       </ul>
     </div>
@@ -48,23 +47,114 @@
     place-items: center;
     background-color: #484848;
   }
+  .cardTitle {
+    font-family: Roboto,arial,sans-serif;
+    text-align: center;
+    font-weight: 300;
+    margin-top: 0.5em;
+  }
+  .greyLink {
+    color: grey;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+  }
+  .greyLink:hover {
+    text-decoration: underline;
+  }
+  form.sign div.fieldWrapper {
+    padding-right: 3px;
+    margin-bottom: 0.666em;
+  }
+  form.sign div.fieldWrapper input {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 1.25em;
+    border: 0;
+    background-color: #eee;
+    padding: 10px;
+  }
+  .OR-Line {
+      position: relative;
+      border: 2px solid #0019;
+      margin: 2em 0;
+      height: 0px;
+    }
+  .OR-Line span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    background-color: white;
+    padding: 0 15px 0 15px;
+    text-align: center;
+    font-weight: 300;
+    font-size: larger;
+  }
+  .formBottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.25em;
+  }
+  .formBottom button[type=submit] {
+    border: 0;
+    padding: 0.4em;
+    background: #4285f4;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .formBottom button[type=submit]:hover,
+  .formBottom button[type=submit]:focus {
+    background: linear-gradient(-70deg, hsl(0deg, 100%, 50%), hsl(30deg, 100%, 50%), hsl(60deg, 100%, 50%), hsl(90deg, 100%, 50%), hsl(120deg, 100%, 50%), hsl(150deg, 100%, 50%), hsl(180deg, 100%, 50%), hsl(210deg, 100%, 50%), hsl(240deg, 100%, 50%), hsl(270deg, 100%, 50%), hsl(300deg, 100%, 50%));
+    animation: rainbow 10s ease infinite;
+    background-size: 600% 600%;
+  }
+  .googleLogin {
+    padding: 0;
+    font: "Roboto";
+    border: 1px solid #4285f4;
+    background-color: #4285f4;
+    margin: 3px auto;
+    display: flex;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 1em;
+  }
+  .googleLogin img {
+    height: 20px;
+    width: 20px;
+    padding: 14px;
+    background: #fff;
+  }
+  .googleLogin span {
+    align-self: center;
+    padding: 16px;
+    color: #fff;
+    font-size: 16px;
+    font-family: Roboto,arial,sans-serif;
+    font-weight: 500;
+  }
   .rainbowBorder {
     background: linear-gradient(270deg, hsl(0deg, 100%, 50%), hsl(30deg, 100%, 50%), hsl(60deg, 100%, 50%), hsl(90deg, 100%, 50%), hsl(120deg, 100%, 50%), hsl(150deg, 100%, 50%), hsl(180deg, 100%, 50%), hsl(210deg, 100%, 50%), hsl(240deg, 100%, 50%), hsl(270deg, 100%, 50%), hsl(300deg, 100%, 50%));
     animation: rainbow 30s ease infinite;
     background-size: 600% 600%;
-    width: fit-content;
+    width: min-content;
     height: fit-content;
     padding: 5px;
     box-shadow: 0 0 4em 4em #0004;
   }
   .cardInner {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 280px;
     background-color: white;
     display: inline-block;
     padding: 4px;
   }
   @keyframes rainbow {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
 </style>

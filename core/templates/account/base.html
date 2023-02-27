@@ -10,20 +10,7 @@
     {% endblock %}
   </head>
   <body>
-    {% block body %}
-
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-    <div>
+    <div style="position: fixed; top: 0;">
       <ul class="menu">
         <li><a href="/">Main Page</a></li>
         {% if not user.is_authenticated %}
@@ -34,51 +21,50 @@
             <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
             <li><a href="{% url 'socialaccount_connections' %}">Connections</a></li>
         {% endif %}
-    </ul>
+      </ul>
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
+    <div class="rainbowBorder">
+      <div class="cardInner">
+        {% block body %}
+        {% block content %}
+        {% endblock %}
+        {% endblock %}
+        {% block extra_body %}
+        {% endblock %}        
+      </div>
+    </div>
   </body>
 </html>
 
 <style>
-    body {
-        margin: 40px auto 0 auto;
-        max-width: fit-content;
-        box-shadow: 6px 6px 10px 10px #0002;
-        padding: 20px;
-        border-radius: 20px;
-        background-color: #fff;
-        border-bottom: 3px solid black;
-        border-right: 3px solid black;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        padding: 0;
-    }
-    .menu > * {
-        list-style-type: none;
-    }
-    .menu a {
-        text-decoration: none;
-        border: 1px solid #888;
-        padding: 3px;
-    }
-
-    html {
-        background: linear-gradient(133deg, #3f7bac, #21a549);
-        background-size: 400% 400%;
-        animation: BackgroundGradient 40s ease-in-out infinite;
-    }
-    @keyframes BackgroundGradient {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
-    }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    place-content: center;
+    place-items: center;
+    background-color: #484848;
+  }
+  .rainbowBorder {
+    background: linear-gradient(270deg, hsl(0deg, 100%, 50%), hsl(30deg, 100%, 50%), hsl(60deg, 100%, 50%), hsl(90deg, 100%, 50%), hsl(120deg, 100%, 50%), hsl(150deg, 100%, 50%), hsl(180deg, 100%, 50%), hsl(210deg, 100%, 50%), hsl(240deg, 100%, 50%), hsl(270deg, 100%, 50%), hsl(300deg, 100%, 50%));
+    animation: rainbow 30s ease infinite;
+    background-size: 600% 600%;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    box-shadow: 0 0 4em 4em #0004;
+  }
+  .cardInner {
+    background-color: white;
+    display: inline-block;
+    padding: 4px;
+  }
+  @keyframes rainbow {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
 </style>

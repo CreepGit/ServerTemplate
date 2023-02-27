@@ -8,19 +8,33 @@
 
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
+<h1 class="signInTitle">Sign In</h1>
+<a href="/accounts/signup/" class="signUpLink">Sign up</a>
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form.non_field_errors }}
+  <div class="fieldWrapper">
+    {{ form.email.errors }}
+    {{ form.login }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.email.errors }}
+    {{ form.password }}
+  </div>
   {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+  <div class="formBottom">
+    <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+    <button type="submit">{% trans "Sign In" %}</button>
+  </div>
 </form>
 
-<div style="height:40px;"></div>
+
+<div class="OR-Line">
+  <span>OR</span>
+</div>
 
 <form method="post" action="/accounts/google/login/?process=login">
     {% csrf_token %}
@@ -30,8 +44,73 @@
     </button>
 </form>
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+    * {
+      font-family: Roboto;
+      font-weight: 300;
+    }
+    .signInTitle {
+      font-family: Roboto,arial,sans-serif;
+      text-align: center;
+      font-weight: 300;
+      margin-top: 0.5em;
+    }
+    .signUpLink {
+      color: grey;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin-bottom: 1.5em;
+    }
+    form.login div.fieldWrapper {
+      padding-right: 3px;
+      margin-bottom: 0.666em;
+    }
+    form.login div.fieldWrapper input {
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 1.25em;
+      border: 0;
+      background-color: #eee;
+      padding: 10px;
+    }
+    .OR-Line {
+      position: relative;
+      border: 2px solid #0019;
+      margin: 2em 0;
+      height: 0px;
+    }
+    .OR-Line span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      translate: -50% -50%;
+      background-color: white;
+      padding: 0 15px 0 15px;
+      text-align: center;
+      font-weight: 300;
+      font-size: larger;
+    }
+    .formBottom {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.25em;
+    }
+    .formBottom button[type=submit] {
+      border: 0;
+      padding: 0.4em;
+      background: #4285f4;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .formBottom button[type=submit]:hover,
+    .formBottom button[type=submit]:focus {
+      background: linear-gradient(-70deg, hsl(0deg, 100%, 50%), hsl(30deg, 100%, 50%), hsl(60deg, 100%, 50%), hsl(90deg, 100%, 50%), hsl(120deg, 100%, 50%), hsl(150deg, 100%, 50%), hsl(180deg, 100%, 50%), hsl(210deg, 100%, 50%), hsl(240deg, 100%, 50%), hsl(270deg, 100%, 50%), hsl(300deg, 100%, 50%));
+      animation: rainbow 10s ease infinite;
+      background-size: 600% 600%;
+    }
     .googleLogin {
         padding: 0;
         font: "Roboto";
@@ -54,6 +133,7 @@
         color: #fff;
         font-size: 16px;
         font-family: Roboto,arial,sans-serif;
+        font-weight: 500;
     }
 </style>
 {% endblock %}
